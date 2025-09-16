@@ -35,7 +35,7 @@ const PaymentButton = ({ orderData }) => {
 
       // 2. Configure Razorpay options
       const options = {
-        key: 'rzp_test_Fh3EONv9cLGEzC', // 🔑 Replace with your actual Razorpay public key
+        key: 'rzp_live_RGhYa7pt0dsQEv', // 🔑 Replace with your actual Razorpay public key
         amount: amount,
         currency: "INR",
         name: "Your Brand Name",
