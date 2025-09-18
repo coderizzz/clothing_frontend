@@ -31,12 +31,14 @@ import ShippingPolicy from "./Pages/ShippingPolicy.jsx"
 import TermsConditions from "./Pages/TermsConditions"
 import OrderProcessing  from "./Components/OrderProcessing.jsx"
 import OrderSection from "./Admin/OderSection.jsx"
+import Adnin from './Pages/About.jsx'
 
 import AnalyticsDashboard from './Admin/AnalyticsDashboard.jsx';
 
 import AdminGuard from './Admin/auth/AdminGuard.jsx';
 import AdminLogin from './Admin/AdminLogin.jsx';
 import ReturnPolicy from './Pages/ReturnPolicy.jsx';
+import About from './Pages/About.jsx';
 
 
 const App = () => {
@@ -64,6 +66,7 @@ const App = () => {
               <Route  path='/women' element={<Prodcuts/>}/>
                 <Route  path='/kid' element={<Prodcuts/>}/>
                   <Route  path='/corporate' element={<Prodcuts/>}/>
+                  <Route path='/about' element={<About />} />
               <Route  path='/contact' element={<Contact/>}/>
                 <Route  path='/cart' element={<Cart/>}/>
                 <Route  path='/products/:id' element={<ProductPage/>}/>

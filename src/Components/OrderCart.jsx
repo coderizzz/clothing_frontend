@@ -77,7 +77,7 @@ const OrderCart = ({ order }) => {
         {/* Price & Quantity */}
         <div className="mt-3 flex items-center justify-between">
           <p className="text-gray-800 text-sm sm:text-base font-semibold">
-            ₹{order.price.toFixed(2)}
+            ₹{order.price.toFixed(0)}
           </p>
           <p className="text-gray-600 text-xs sm:text-sm">
             Qty: {order.products[0]?.quantity || 1}

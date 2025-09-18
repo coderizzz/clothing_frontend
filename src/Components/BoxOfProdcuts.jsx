@@ -52,7 +52,7 @@ const BoxOfProdcuts = ({ price ,title ,id ,image }) => {
   ? calculatePrice(toConvert, price, priceIncrease) 
   : "..."}
 </span>
-          <button onClick={(e)=>{
+          {/* <button onClick={(e)=>{
             e.preventDefault();       // prevent Link default
     e.stopPropagation();  
             addtocart({
@@ -64,7 +64,7 @@ const BoxOfProdcuts = ({ price ,title ,id ,image }) => {
             });
           }} className="px-4 py-1.5 bg-[#E5C870] text-black text-sm font-medium rounded-full hover:bg-gray-800 transition">
              Add to Bag
-          </button>
+          </button> */}
         </div>
       </div>
     </Link>

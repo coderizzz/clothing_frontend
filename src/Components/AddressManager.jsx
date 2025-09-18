@@ -39,13 +39,16 @@ const AddressManager = ({ addresss, setAddresss, user, setUser }) => {
       return;
     }
 
-    setAddress((prev) => ({ ...prev, [name]: value }));
+    // All other fields except city are editable
+    if (name !== 'city') {
+      setAddress((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   // Auto-fetch City/State when pincode is 6 digits (debounced)
   useEffect(() => {
-    const pc = address.pincode;
-    if (pc.length !== 6) return; // only when complete
+    const pc = address.pincode.trim();
+    if (pc.length !== 6) return;
 
     let cancelled = false;
     setPinStatus({ loading: true, msg: '' });
@@ -56,22 +59,18 @@ const AddressManager = ({ addresss, setAddresss, user, setUser }) => {
         const data = await res.json();
 
         const item = Array.isArray(data) ? data[0] : null;
+        const offices = item?.PostOffice;
 
-        if (
-          item &&
-          item.Status === 'Success' &&
-          Array.isArray(item.PostOffice) &&
-          item.PostOffice.length > 0
-        ) {
-          const first = item.PostOffice[0];
-          const detectedCity = first.District || '';
-          const detectedState = first.State || '';
+        if (item?.Status === 'Success' && Array.isArray(offices) && offices.length > 0) {
+          const first = offices[0];
+          const detectedCity = first?.District || '';
+          const detectedState = first?.State || '';
 
           if (!cancelled) {
             setAddress((prev) => ({
               ...prev,
-              city: prev.city || detectedCity,
-              state: prev.state || detectedState,
+              city: detectedCity,
+              state: detectedState,
               country: 'India',
             }));
             setPinStatus({ loading: false, msg: '' });
@@ -79,6 +78,7 @@ const AddressManager = ({ addresss, setAddresss, user, setUser }) => {
         } else {
           if (!cancelled) {
             setPinStatus({ loading: false, msg: 'Invalid pincode' });
+            setAddress((prev) => ({ ...prev, city: '', state: '' }));
           }
         }
       } catch (e) {
@@ -86,7 +86,7 @@ const AddressManager = ({ addresss, setAddresss, user, setUser }) => {
           setPinStatus({ loading: false, msg: 'Could not fetch location. Try again.' });
         }
       }
-    }, 500); // debounce 500ms
+    }, 500);
 
     return () => {
       cancelled = true;
@@ -244,12 +244,13 @@ const AddressManager = ({ addresss, setAddresss, user, setUser }) => {
           )}
         </div>
 
+        {/* City - READONLY */}
         <input
           name="city"
           placeholder="City"
           value={address.city}
-          onChange={handleInputChange}
-          className="p-2 bg-gray-900 border border-gray-600 text-white rounded"
+          readOnly
+          className="p-2 bg-gray-800 border border-gray-600 text-gray-300 rounded cursor-not-allowed"
         />
         <input
           name="state"
